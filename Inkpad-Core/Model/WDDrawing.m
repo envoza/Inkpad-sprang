@@ -691,13 +691,13 @@ NSLog(@"Elements in drawing: %lu", (unsigned long)[self allElements].count);
 	[svg appendString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"];
 	[svg appendString:@"<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"\n"];
 	[svg appendString:@"  \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"];
-    [svg appendString:@"<!-- Created with Inkpad (http://www.taptrix.com/) -->"];
+    [svg appendString:@"<!-- Created with Inkpad (http://inkpad.envoza.com/) -->"];
     
     WDXMLElement *svgElement = [WDXMLElement elementWithName:@"svg"];
     [svgElement setAttribute:@"version" value:@"1.1"];
     [svgElement setAttribute:@"xmlns" value:@"http://www.w3.org/2000/svg"];
     [svgElement setAttribute:@"xmlns:xlink" value:@"http://www.w3.org/1999/xlink"];
-    [svgElement setAttribute:@"xmlns:inkpad" value:@"http://taptrix.com/inkpad/svg_extensions"];
+    [svgElement setAttribute:@"xmlns:inkpad" value:@"http://inkpad.envoza.com/svg_extensions"];
     [svgElement setAttribute:@"width" value:[NSString stringWithFormat:@"%gpt", dimensions_.width]];
     [svgElement setAttribute:@"height" value:[NSString stringWithFormat:@"%gpt", dimensions_.height]];
     [svgElement setAttribute:@"viewBox" value:[NSString stringWithFormat:@"0,0,%g,%g", dimensions_.width, dimensions_.height]];

@@ -298,7 +298,7 @@ NSString *WDDrawingNewFilenameKey = @"WDDrawingNewFilenameKey";
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
-        importQueue = dispatch_queue_create("com.taptrix.inkpad.import", DISPATCH_QUEUE_SERIAL);
+        importQueue = dispatch_queue_create("com.envoza.inkpad.import", DISPATCH_QUEUE_SERIAL);
     });
     
     return importQueue;

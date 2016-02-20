@@ -30,6 +30,8 @@
 #import "WDPageSizeController.h"
 #import "WDThumbnailView.h"
 #import "UIBarButtonItem+Additions.h"
+#import "WDMenuController.h"
+
 
 #define kEditingHighlightRadius     125
 
@@ -120,18 +122,20 @@ NSString *WDAttachmentNotification = @"WDAttachmentNotification";
                                                                                     action:@selector(importFromCamera:)];
         [rightBarButtonItems addObject:cameraItem];
     }
-    
+	
+	/* Removed until search bar issue resolved
     UIBarButtonItem *openClipArtItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"openclipart.png"]
                                                                         style:UIBarButtonItemStylePlain
                                                                        target:self
                                                                        action:@selector(showOpenClipArt:)];
     [rightBarButtonItems addObject:openClipArtItem];
-
-    // Create a help button to display in the top left corner.
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Help", @"Help")
-                                                                 style:UIBarButtonItemStyleBordered
-                                                                target:self
-                                                                action:@selector(showHelp:)];
+	*/
+	
+    // Create menu button to display in the top left corner.
+	UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sidedrawer.png"]
+																 style:UIBarButtonItemStylePlain
+																target:self
+																action:@selector(showMainMenu:)];
     self.navigationItem.leftBarButtonItem = leftItem;
     self.navigationItem.rightBarButtonItems = rightBarButtonItems;
     self.toolbarItems = [self defaultToolbarItems];
@@ -293,6 +297,8 @@ NSString *WDAttachmentNotification = @"WDAttachmentNotification";
 
 - (void) viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
+	
     if (!everLoaded_) {
         if ([[WDDrawingManager sharedInstance] numberOfDrawings] > 0) {
             // scroll to bottom
@@ -304,6 +310,20 @@ NSString *WDAttachmentNotification = @"WDAttachmentNotification";
         
         everLoaded_ = YES;
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	
+	viewAppeared_ = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+	
+	viewAppeared_ = NO;
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -648,6 +668,31 @@ NSString *WDAttachmentNotification = @"WDAttachmentNotification";
     return toolbarItems_;
 }
 
+#pragma mark - Main menu
+
+- (void) showMainMenu:(id)sender
+{
+	if (viewAppeared_ == NO) {
+		// Ignore if the view has not appeared
+		return;
+	}
+	if (menuController_.isVisible) {
+		[self dismissPopover];
+		return;
+	}
+	
+	[self dismissPopover];
+	
+	if (!menuController_) {
+		menuController_ = [self.storyboard instantiateViewControllerWithIdentifier:@"mainMenu"];
+	}
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:menuController_];
+	
+	popoverController_ = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+	popoverController_.delegate = self;
+	[popoverController_ presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:NO];
+}
+
 #pragma mark - Panels
 
 - (void) showFontLibraryPanel:(id)sender
@@ -743,18 +788,6 @@ NSString *WDAttachmentNotification = @"WDAttachmentNotification";
     }
 }
 
-- (void) showHelp:(id)sender
-{
-    WDHelpController *helpController = [[WDHelpController alloc] initWithNibName:nil bundle:nil];
-    
-    // Create a Navigation controller
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:helpController];
-    navController.modalPresentationStyle = UIModalPresentationPageSheet;
-    
-    // show the navigation controller modally
-    [self presentViewController:navController animated:YES completion:nil];
-}
-
 #pragma mark - Popovers
 
 - (void) dismissPopoverAnimated:(BOOL)animated
@@ -770,6 +803,7 @@ NSString *WDAttachmentNotification = @"WDAttachmentNotification";
     fontLibraryController_ = nil;
     samplesController_ = nil;
     activityController_ = nil;
+	menuController_ = nil;
     
     if (deleteSheet_) {
         [deleteSheet_ dismissWithClickedButtonIndex:deleteSheet_.cancelButtonIndex animated:NO];
@@ -794,6 +828,7 @@ NSString *WDAttachmentNotification = @"WDAttachmentNotification";
     fontLibraryController_ = nil;
     samplesController_ = nil;
     activityController_ = nil;
+	menuController_ = nil;
 }
 
 - (void)didDismissModalView {

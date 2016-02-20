@@ -61,7 +61,7 @@ NSString *WDFontAddedNotification = @"WDFontAddedNotification";
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
-        fontLoadingQueue = dispatch_queue_create("com.taptrix.inkpad.font", DISPATCH_QUEUE_SERIAL);
+        fontLoadingQueue = dispatch_queue_create("com.envoza.inkpad.font", DISPATCH_QUEUE_SERIAL);
     });
     
     return fontLoadingQueue;

@@ -12,7 +12,6 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import "OCADownloader.h"
-#import "WDHelpController.h"
 #import "WDImportController.h"
 #import "WDSamplesController.h"
 
@@ -28,6 +27,7 @@
 @class WDBlockingView;
 @class WDExportController;
 @class OCAViewController;
+@class WDMenuController;
 
 @interface WDBrowserController : UICollectionViewController <UIActionSheetDelegate,
                                                              UIPopoverControllerDelegate,
@@ -58,6 +58,7 @@
     WDSamplesController     *samplesController_;
     WDActivityController    *activityController_;
     OCAViewController       *openClipArtController_;
+	WDMenuController		*menuController_;
     
     DBRestClient            *restClient_;
     NSMutableSet            *filesBeingUploaded_;
@@ -67,6 +68,7 @@
     WDThumbnailView         *editingThumbnail_;
     
     BOOL                    everLoaded_;
+	BOOL					viewAppeared_;
     
     NSMutableSet            *downloaders_; // for downloading open clip art
 }

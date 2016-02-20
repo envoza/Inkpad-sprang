@@ -1415,6 +1415,8 @@
     [facebookSheet addImage:self.drawing.image];
     [facebookSheet setInitialText:NSLocalizedString(@"Check out my Inkpad drawing!", @"Check out my Inkpad drawing!")];
     
+	[self hidePopovers];
+	
     [self presentViewController:facebookSheet animated:YES completion:nil];
 }
 
@@ -1449,6 +1451,8 @@
 {
     NSString *baseFilename = [self.document.filename stringByDeletingPathExtension];
     NSString *filename = nil;
+	
+	[self hidePopovers];
 
     // Generates export file in requested format
     if ([format isEqualToString:@"PDF"]) {

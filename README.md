@@ -63,4 +63,4 @@ Localizations:
 
 App Icon:
 
-* [Matthew Rex Downham](http://www.mrexd.com/)
+* [Lindsay Pollard](http://inkpad.envoza.com/) inspired by original by [Matthew Rex Downham](http://www.mrexd.com/)

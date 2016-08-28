@@ -6,7 +6,7 @@
 //  License, v. 2.0. If a copy of the MPL was not distributed with this
 //  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 //
-//  Copyright (c) 2010-2013 Steve Sprang
+//  Copyright (c) 2010-2013 Steve Sprang, 2016 Derek Pollard
 //
 
 #import "WDBezierNode.h"
@@ -193,6 +193,12 @@
 // Replace the implementation of this method to do your own custom drawing
 - (void) drawView
 {
+	UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+	if (state == UIApplicationStateBackground || state == UIApplicationStateInactive)
+	{
+		return;
+	}
+	
     [EAGLContext setCurrentContext:context];
     
     glMatrixMode(GL_PROJECTION);

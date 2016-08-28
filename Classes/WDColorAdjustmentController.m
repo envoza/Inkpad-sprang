@@ -6,7 +6,7 @@
 //  License, v. 2.0. If a copy of the MPL was not distributed with this
 //  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 //
-//  Copyright (c) 2011-2013 Steve Sprang
+//  Copyright (c) 2011-2013 Steve Sprang, 2016 Derek Pollard
 //
 
 #import "WDAppDelegate.h"
@@ -75,6 +75,7 @@
     [blockingView_ removeFromSuperview];
     blockingView_ = nil;
 
+	// TODO Resolve invalid lifecycle call
     [super viewWillDisappear:animated];
     
     if (animated) {
@@ -147,6 +148,8 @@
 
 - (void)viewDidLoad
 {
+	[super viewDidLoad];
+
     UIView *panView = [[WDTouchEatingView alloc] initWithFrame:CGRectInset(navBar_.frame, 75, 0)];
     panView.backgroundColor = nil;
     panView.opaque = NO;
@@ -279,9 +282,11 @@
     self.view.sharpCenter = WDCenterOfRect(frame);
     
     [self beginColorAdjustmentSession];
-    
+	
+	// TODO Resolve invalid lifecycle call
     [super viewWillAppear:NO];
     [view addSubview:self.view];
+	// TODO Resolve invalid lifecycle call
     [super viewDidAppear:NO];
     
     // make sure it's on screen (the device might have rotated since we last saved the frame)

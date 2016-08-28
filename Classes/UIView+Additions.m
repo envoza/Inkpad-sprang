@@ -6,7 +6,7 @@
 //  License, v. 2.0. If a copy of the MPL was not distributed with this
 //  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 //
-//  Copyright (c) 2010-2013 Steve Sprang
+//  Copyright (c) 2010-2013 Steve Sprang, 2016 Derek Pollard
 //
 
 #import "UIView+Additions.h"
@@ -22,8 +22,17 @@ const float kDefaultParallaxIntensity = 15.0f;
     
     frame.origin = WDSubtractPoints(center, CGPointMake(CGRectGetWidth(frame) / 2, CGRectGetHeight(frame) / 2));
     frame.origin = WDRoundPoint(frame.origin);
-                              
-    self.center = WDCenterOfRect(frame);
+	
+	CGPoint sharpCenter = WDCenterOfRect(frame);
+	if (isnan(sharpCenter.x))
+	{
+		sharpCenter.x = 0;
+	}
+	if (isnan(sharpCenter.y))
+	{
+		sharpCenter.y = 0;
+	}
+	self.center = sharpCenter;
 }
 
 - (CGPoint) sharpCenter

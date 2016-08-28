@@ -6,7 +6,7 @@
 //  License, v. 2.0. If a copy of the MPL was not distributed with this
 //  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 //
-//  Copyright (c) 2011-2013 Steve Sprang
+//  Copyright (c) 2011-2013 Steve Sprang, 2016 Derek Pollard
 //
 
 #import <Twitter/Twitter.h>
@@ -1216,15 +1216,17 @@
     
     // revert back to selection tool
     [WDToolManager sharedInstance].activeTool = ([WDToolManager sharedInstance].tools)[0];
+
+	[super viewWillDisappear:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
+
     if (canvas_.drawing) {
         return;
     }
-    
-    [super viewWillAppear:animated];
     
     [self setToolbarItems:[self editingItems] animated:YES];
     

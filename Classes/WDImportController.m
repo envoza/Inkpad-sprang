@@ -8,7 +8,7 @@
 //
 //  Original implementation by Joe Ricioppo
 //
-//  Copyright (c) 2011-2013 Steve Sprang
+//  Copyright (c) 2011-2013 Steve Sprang, 2016 Derek Pollard
 //
 
 #import <DropboxSDK/DropboxSDK.h>
@@ -113,11 +113,15 @@ static NSString * const WDDropboxSubdirectoryMissingNotification = @"WDDropboxSu
 
 - (void) viewDidLoad
 {
+	[super viewDidLoad];
+
     [self.navigationController setToolbarHidden:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
+
 	NSString *rootPath = @"/";
 	
 	// first pass - push last viewed directory, or default to Inkpad directory, creating if necessary
@@ -159,6 +163,8 @@ static NSString * const WDDropboxSubdirectoryMissingNotification = @"WDDropboxSu
 	[[NSUserDefaults standardUserDefaults] setObject:remotePath_ forKey:WDDropboxLastPathVisited];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	[selectedItems_ removeAllObjects];
+
+	[super viewWillDisappear:animated];
 }
 
 #pragma mark -

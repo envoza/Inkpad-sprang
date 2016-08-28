@@ -6,7 +6,7 @@
 //  License, v. 2.0. If a copy of the MPL was not distributed with this
 //  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 //
-//  Copyright (c) 2010-2013 Steve Sprang
+//  Copyright (c) 2010-2013 Steve Sprang, 2016 Derek Pollard
 //
 
 #import "WDPageSizeController.h"
@@ -53,6 +53,8 @@ static NSString *orientations_[] = { @"Portrait", @"Landscape" };
 
 - (void) viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
+
     UIBarButtonItem *createItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Create", @"Create new drawing")
                                                                    style:UIBarButtonItemStyleDone
                                                                   target:target_
